@@ -174,7 +174,7 @@ function rita(d) {
     "Känns som " + Math.round(d.current.apparent_temperature) + "°"
     + " &nbsp;·&nbsp; Vind " + Math.round(d.current.wind_speed_10m) + " m/s";
 
-  const nu = new Date().getHours();
+  const nu = new Date().getHours() + 6;
   let start = d.hourly.time.findIndex(x => new Date(x).getHours() > nu);
   if (start < 0) start = 0;
 
