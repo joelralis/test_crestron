@@ -3,107 +3,213 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Paneltest</title>
+<title>Väder</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  :root {
+    --bg:    #0e1114;
+    --panel: #161a1f;
+    --line:  #262c33;
+    --fg:    #e6e4df;
+    --muted: #7d848e;
+    --accent:#86c49a;
+  }
 
   body {
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    background: #14161a;
-    color: #e8e6e1;
-    font-family: "Segoe UI", Roboto, system-ui, sans-serif;
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    width:100vw; height:100vh; overflow:hidden;
+    background:var(--bg); color:var(--fg);
+    font-family:"Segoe UI", Roboto, system-ui, sans-serif;
+    font-variant-numeric:tabular-nums;
+    display:grid;
+    grid-template-columns:1.5fr 1fr;
+    grid-template-rows:auto 1fr auto;
   }
 
-  .cell {
-    padding: 5vh 4vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 1.4vh;
-    border-right: 1px solid #2b2f36;
-    border-bottom: 1px solid #2b2f36;
+  header {
+    grid-column:1 / -1;
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:2.5vh 3vw 2vh;
+    border-bottom:1px solid var(--line);
   }
+  .ort  { font-size:3vh; font-weight:500; letter-spacing:.02em; }
+  .klocka { font-size:3vh; font-weight:300; color:var(--muted); }
 
-  .hej {
-    font-size: 9vh;
-    font-weight: 200;
-    letter-spacing: -0.03em;
-    line-height: 0.95;
+  .nu {
+    padding:3vh 3vw;
+    display:flex; flex-direction:column; justify-content:center; gap:1.5vh;
+    border-right:1px solid var(--line);
   }
-
-  .under {
-    font-size: 2.4vh;
-    color: #8b8f98;
-    max-width: 30ch;
-    line-height: 1.5;
+  .grad {
+    font-size:22vh; font-weight:200; line-height:.85;
+    letter-spacing:-.04em; color:var(--accent);
   }
+  .grad sup { font-size:.32em; font-weight:300; vertical-align:top; top:.5em; position:relative; }
+  .lage { font-size:4vh; font-weight:300; }
+  .extra { font-size:2.4vh; color:var(--muted); line-height:1.6; }
 
-  .serif {
-    background: #f3efe6;
-    color: #1d1b16;
-    font-family: Georgia, "Times New Roman", serif;
+  .timmar { padding:3vh 2.5vw; display:flex; flex-direction:column; justify-content:center; }
+  .rad {
+    display:grid; grid-template-columns:4.5ch 1fr 5ch;
+    align-items:center; gap:1.2vw;
+    padding:1.4vh 0; border-bottom:1px solid var(--line);
+    font-size:2.4vh;
   }
+  .rad:last-child { border-bottom:none; }
+  .rad .kl { color:var(--muted); }
+  .rad .t  { text-align:right; font-weight:500; }
+  .stapel { height:.5vh; background:var(--line); border-radius:2px; overflow:hidden; }
+  .stapel i { display:block; height:100%; background:#4d7fa8; }
 
-  .serif h2 { font-size: 5vh; font-weight: 400; font-style: italic; }
-  .serif p  { font-size: 2.6vh; line-height: 1.6; max-width: 26ch; }
-
-  .mono {
-    background: #0b3a2f;
-    color: #7ee0b0;
-    font-family: "Courier New", ui-monospace, monospace;
+  footer {
+    grid-column:1 / -1;
+    display:flex; border-top:1px solid var(--line);
   }
-
-  .mono div { font-size: 2.6vh; line-height: 1.7; }
-  .mono .big { font-size: 6vh; letter-spacing: 0.08em; }
-
-  .blobb {
-    background: #c4462a;
-    color: #fff5f0;
-    align-items: flex-start;
+  .dag {
+    flex:1; padding:2vh 1vw; text-align:center;
+    border-right:1px solid var(--line);
   }
+  .dag:last-child { border-right:none; }
+  .dag .namn { font-size:2vh; color:var(--muted); margin-bottom:.8vh; }
+  .dag .sp   { font-size:2.6vh; font-weight:500; }
+  .dag .sp b { font-weight:500; }
+  .dag .sp span { color:var(--muted); font-weight:300; }
 
-  .blobb .prick {
-    width: 9vh;
-    height: 9vh;
-    border-radius: 50%;
-    background: #fff5f0;
-    animation: puls 2.2s ease-in-out infinite;
-  }
-
-  .blobb p { font-size: 3vh; font-weight: 600; line-height: 1.3; }
-
-  @keyframes puls {
-    0%, 100% { transform: scale(1);   opacity: 1;   }
-    50%      { transform: scale(0.7); opacity: 0.5; }
-  }
+  svg.ikon { width:1em; height:1em; vertical-align:-.12em; }
+  .fel { padding:5vh 3vw; font-size:3vh; color:var(--muted); grid-column:1 / -1; }
 </style>
 </head>
 <body>
 
-  <section class="cell">
-    <div class="hej">Hej, jag<br>testar<br>panelen</div>
-    <p class="under">Blablabla. Om du läser det här så laddar General Web en extern sida utan problem.</p>
-  </section>
+<header>
+  <div class="ort" id="ort">Västberga</div>
+  <div class="klocka" id="klocka">--:--</div>
+</header>
 
-  <section class="cell serif">
-    <h2>Serif, kursiv</h2>
-    <p>Här kollar vi om panelen renderar en helt annan typsnittsfamilj och ljus bakgrund.</p>
-  </section>
+<section class="nu">
+  <div class="grad" id="grad">--<sup>°</sup></div>
+  <div class="lage" id="lage">Hämtar…</div>
+  <div class="extra" id="extra"></div>
+</section>
 
-  <section class="cell mono">
-    <div class="big">2A 4F 91</div>
-    <div>monospace<br>grönt på mörkgrönt<br>blabla bla</div>
-  </section>
+<section class="timmar" id="timmar"></section>
 
-  <section class="cell blobb">
-    <div class="prick"></div>
-    <p>Rör sig den vita pricken? Då funkar CSS-animationer också.</p>
-  </section>
+<footer id="dagar"></footer>
+
+<script>
+const LAT = 59.296;
+const LON = 18.006;
+const ORT = "Västberga";
+
+const KODER = {
+  0:["Klart","sol"], 1:["Mestadels klart","sol"], 2:["Halvklart","halv"], 3:["Molnigt","moln"],
+  45:["Dimma","dimma"], 48:["Underkyld dimma","dimma"],
+  51:["Lätt duggregn","dugg"], 53:["Duggregn","dugg"], 55:["Tätt duggregn","dugg"],
+  56:["Underkylt duggregn","dugg"], 57:["Underkylt duggregn","dugg"],
+  61:["Lätt regn","regn"], 63:["Regn","regn"], 65:["Kraftigt regn","regn"],
+  66:["Underkylt regn","regn"], 67:["Underkylt regn","regn"],
+  71:["Lätt snöfall","sno"], 73:["Snöfall","sno"], 75:["Kraftigt snöfall","sno"],
+  77:["Snökorn","sno"],
+  80:["Regnskurar","regn"], 81:["Regnskurar","regn"], 82:["Kraftiga skurar","regn"],
+  85:["Snöbyar","sno"], 86:["Snöbyar","sno"],
+  95:["Åska","aska"], 96:["Åska med hagel","aska"], 99:["Åska med hagel","aska"]
+};
+
+const IKON = {
+  sol:   '<circle cx="12" cy="12" r="5"/><g stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.5 4.5l2 2M17.5 17.5l2 2M19.5 4.5l-2 2M6.5 17.5l-2 2"/></g>',
+  halv:  '<circle cx="8.5" cy="9" r="4"/><path d="M8 19h9a4 4 0 0 0 0-8 5.5 5.5 0 0 0-10.4 1.4A3.4 3.4 0 0 0 8 19z"/>',
+  moln:  '<path d="M7 19h10a4 4 0 0 0 0-8 6 6 0 0 0-11.5 1.6A3.5 3.5 0 0 0 7 19z"/>',
+  dimma: '<path d="M7 14h10a4 4 0 0 0 0-8 6 6 0 0 0-11.5 1.6A3.5 3.5 0 0 0 7 14z"/><g stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 18h16M6 21.5h12"/></g>',
+  dugg:  '<path d="M7 14h10a4 4 0 0 0 0-8 6 6 0 0 0-11.5 1.6A3.5 3.5 0 0 0 7 14z"/><g stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M9 17.5v1.5M13 17.5v2.5M17 17.5v1.5"/></g>',
+  regn:  '<path d="M7 13h10a4 4 0 0 0 0-8 6 6 0 0 0-11.5 1.6A3.5 3.5 0 0 0 7 13z"/><g stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8.5 16l-1 4M13 16l-1 5M17.5 16l-1 4"/></g>',
+  sno:   '<path d="M7 13h10a4 4 0 0 0 0-8 6 6 0 0 0-11.5 1.6A3.5 3.5 0 0 0 7 13z"/><g fill="currentColor"><circle cx="9" cy="18" r="1.2"/><circle cx="13" cy="20.5" r="1.2"/><circle cx="17" cy="18" r="1.2"/></g>',
+  aska:  '<path d="M7 12h10a4 4 0 0 0 0-8 6 6 0 0 0-11.5 1.6A3.5 3.5 0 0 0 7 12z"/><path d="M13.5 14l-4 5h3l-1 5 5-6.5h-3.2z"/>'
+};
+
+function ikon(typ) {
+  return '<svg class="ikon" viewBox="0 0 24 24" fill="currentColor">' + (IKON[typ] || IKON.moln) + '</svg>';
+}
+
+function farg(t) {
+  if (t < 0)  return "#6ea8d8";
+  if (t < 10) return "#7fb8c4";
+  if (t < 18) return "#86c49a";
+  if (t < 25) return "#d9a441";
+  return "#d9663f";
+}
+
+function klocka() {
+  const d = new Date();
+  document.getElementById("klocka").textContent =
+    String(d.getHours()).padStart(2,"0") + ":" + String(d.getMinutes()).padStart(2,"0");
+}
+
+async function hamta() {
+  const url = "https://api.open-meteo.com/v1/forecast"
+    + "?latitude=" + LAT + "&longitude=" + LON
+    + "&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m"
+    + "&hourly=temperature_2m,weather_code,precipitation_probability"
+    + "&daily=weather_code,temperature_2m_max,temperature_2m_min"
+    + "&timezone=Europe%2FStockholm&forecast_days=5";
+
+  try {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error(r.status);
+    rita(await r.json());
+  } catch (e) {
+    document.getElementById("lage").textContent = "Ingen anslutning";
+    document.getElementById("extra").textContent = "Försöker igen om en stund.";
+  }
+}
+
+function rita(d) {
+  const t = Math.round(d.current.temperature_2m);
+  const [text, typ] = KODER[d.current.weather_code] || ["Okänt","moln"];
+
+  document.documentElement.style.setProperty("--accent", farg(t));
+  document.getElementById("ort").textContent = ORT;
+  document.getElementById("grad").innerHTML = t + '<sup>°</sup>';
+  document.getElementById("lage").innerHTML = ikon(typ) + " " + text;
+  document.getElementById("extra").innerHTML =
+    "Känns som " + Math.round(d.current.apparent_temperature) + "°"
+    + " &nbsp;·&nbsp; Vind " + Math.round(d.current.wind_speed_10m) + " m/s";
+
+  const nu = new Date().getHours();
+  let start = d.hourly.time.findIndex(x => new Date(x).getHours() > nu);
+  if (start < 0) start = 0;
+
+  let h = "";
+  for (let i = start; i < start + 6 && i < d.hourly.time.length; i++) {
+    const kl = new Date(d.hourly.time[i]).getHours();
+    const p  = d.hourly.precipitation_probability[i] || 0;
+    h += '<div class="rad">'
+       + '<span class="kl">' + String(kl).padStart(2,"0") + '</span>'
+       + '<span class="stapel"><i style="width:' + p + '%"></i></span>'
+       + '<span class="t">' + Math.round(d.hourly.temperature_2m[i]) + '°</span>'
+       + '</div>';
+  }
+  document.getElementById("timmar").innerHTML = h;
+
+  const namn = ["Sön","Mån","Tis","Ons","Tors","Fre","Lör"];
+  let f = "";
+  for (let i = 0; i < d.daily.time.length; i++) {
+    const dag = new Date(d.daily.time[i]);
+    const [, ty] = KODER[d.daily.weather_code[i]] || ["","moln"];
+    f += '<div class="dag">'
+       + '<div class="namn">' + (i === 0 ? "Idag" : namn[dag.getDay()]) + '</div>'
+       + '<div class="sp">' + ikon(ty) + " "
+       + '<b>' + Math.round(d.daily.temperature_2m_max[i]) + '°</b> '
+       + '<span>' + Math.round(d.daily.temperature_2m_min[i]) + '°</span>'
+       + '</div></div>';
+  }
+  document.getElementById("dagar").innerHTML = f;
+}
+
+klocka();
+setInterval(klocka, 20000);
+hamta();
+setInterval(hamta, 600000);
+</script>
 
 </body>
 </html>
