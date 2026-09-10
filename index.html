@@ -27,30 +27,28 @@
     font-family:"Segoe UI", Roboto, Helvetica, Arial, system-ui, sans-serif;
     transition:background-color .45s ease, color .45s ease;
     display:flex; flex-direction:column; justify-content:space-between;
-    padding:6vh 5vw;
+    padding:5.5vh 5vw;
     user-select:none;
   }
 
-  header { display:flex; align-items:center; gap:1.6vw; }
+  header { display:flex; align-items:center; justify-content:space-between; gap:3vw; }
+  .vanstergrupp { display:flex; align-items:center; gap:1.8vw; }
 
-  .mark {
-    width:6vh; height:6vh; flex:none;
-    border:.55vh solid var(--ink);
-    border-radius:1.4vh;
-    position:relative;
+  .logga {
+    height:7vh; width:auto; flex:none;
+    filter:brightness(0);
+    opacity:.92;
   }
-  .mark::after {
-    content:""; position:absolute;
-    left:22%; top:22%; width:56%; height:56%;
-    background:var(--ink); border-radius:.5vh;
-  }
+  body.borta .logga { filter:brightness(0) saturate(100%) invert(11%) sepia(64%) saturate(3200%) hue-rotate(357deg) brightness(95%) contrast(105%); }
+
+  .sandvik { height:5.6vh; opacity:.5; }
 
   .avd   { font-size:3.2vh; font-weight:700; letter-spacing:-.01em; line-height:1.15; }
   .plats { font-size:2.6vh; font-weight:400; color:var(--soft); line-height:1.15; }
 
   .namn { display:flex; flex-direction:column; gap:.4vh; }
   .namn div {
-    font-size:10vh; font-weight:800;
+    font-size:9.5vh; font-weight:800;
     letter-spacing:-.035em; line-height:1.04;
   }
 
@@ -98,19 +96,20 @@
   }
   #panik.pa { opacity:1; }
 
-  @media (prefers-reduced-motion:reduce) {
-    * { transition:none !important; }
-  }
+  @media (prefers-reduced-motion:reduce) { * { transition:none !important; } }
 </style>
 </head>
 <body>
 
   <header>
-    <div class="mark" id="mark"></div>
-    <div>
-      <div class="avd">IT Support</div>
-      <div class="plats">Västberga</div>
+    <div class="vanstergrupp">
+      <img class="logga" id="mark" src="https://static.wixstatic.com/media/bc106e_12074164c10b48b28451463a7be238e7~mv2.png/v1/fill/w_560,h_280,al_c,q_85,enc_auto/R%C3%A5lis%20White%20Logo.png" alt="Rålis">
+      <div>
+        <div class="avd">IT Support</div>
+        <div class="plats">Västberga</div>
+      </div>
     </div>
+    <img class="logga sandvik" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmNX1u0XowiTUjIzONEGHy6u4BCpG1NCpFyo96LJh_o_Uu3wgY-tKZYas2&amp;s=10" alt="Sandvik">
   </header>
 
   <div class="namn">
@@ -131,9 +130,7 @@
 <script>
 const NYCKEL = "skylt-status";
 
-function idag() {
-  return new Date().toDateString();
-}
+function idag() { return new Date().toDateString(); }
 
 function las() {
   try {
@@ -144,9 +141,7 @@ function las() {
 }
 
 function spara(borta) {
-  try {
-    localStorage.setItem(NYCKEL, JSON.stringify({ borta: borta, dag: idag() }));
-  } catch (e) {}
+  try { localStorage.setItem(NYCKEL, JSON.stringify({ borta: borta, dag: idag() })); } catch (e) {}
 }
 
 function satt(borta) {
