@@ -8,192 +8,373 @@
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
   :root {
-    --bg:   #4ADE80;
-    --ink:  #04331D;
-    --soft: rgba(4,51,29,.55);
-    --line: rgba(4,51,29,.16);
+    --status: #00B368;
+    --ink:    #101010;
+    --vit:    #FFFFFF;
+    --guld:   #A08C64;
+    --bla:    #1441F5;
   }
 
-  body.borta {
-    --bg:   #FF5C47;
-    --ink:  #3D0B03;
-    --soft: rgba(61,11,3,.55);
-    --line: rgba(61,11,3,.16);
-  }
+  body.borta { --status: #F54B00; }
+
+  html, body { width:100%; height:100%; overflow:hidden; }
 
   body {
-    width:100vw; height:100vh; overflow:hidden;
-    background:var(--bg); color:var(--ink);
+    background:var(--status);
+    color:var(--ink);
     font-family:"Segoe UI", Roboto, Helvetica, Arial, system-ui, sans-serif;
-    transition:background-color .45s ease, color .45s ease;
-    display:flex; flex-direction:column; justify-content:space-between;
-    padding:5.5vh 5vw;
+    font-variant-numeric:tabular-nums;
+    transition:background-color .5s ease;
+    padding:3.5vh 2.5vw;
     user-select:none;
+    cursor:default;
   }
 
-  header { display:flex; align-items:center; justify-content:space-between; gap:3vw; }
-  .vanstergrupp { display:flex; align-items:center; gap:1.8vw; }
+  .kort {
+    width:100%; height:100%;
+    background:var(--vit);
+    border-radius:2.6vh;
+    padding:4.5vh 4vw;
+    display:flex; flex-direction:column; justify-content:space-between;
+    overflow:hidden;
+  }
 
-  .logga {
-    height:7vh; width:auto; flex:none;
+  .topp { display:flex; align-items:flex-start; justify-content:space-between; gap:4vw; }
+
+  .avsandare { display:flex; align-items:center; gap:1.6vw; }
+
+  #mark {
+    height:8vh; width:auto; flex:none;
     filter:brightness(0);
-    opacity:.92;
-  }
-  body.borta .logga { filter:brightness(0) saturate(100%) invert(11%) sepia(64%) saturate(3200%) hue-rotate(357deg) brightness(95%) contrast(105%); }
-
-  .sandvik { height:5.6vh; opacity:.5; }
-
-  .avd   { font-size:3.2vh; font-weight:700; letter-spacing:-.01em; line-height:1.15; }
-  .plats { font-size:2.6vh; font-weight:400; color:var(--soft); line-height:1.15; }
-
-  .namn { display:flex; flex-direction:column; gap:.4vh; }
-  .namn div {
-    font-size:9.5vh; font-weight:800;
-    letter-spacing:-.035em; line-height:1.04;
+    cursor:pointer;
   }
 
-  footer {
-    display:flex; align-items:flex-end; justify-content:space-between;
-    gap:3vw; padding-top:3vh; border-top:1px solid var(--line);
+  .enhet    { font-size:3.4vh; font-weight:700; letter-spacing:-.015em; line-height:1.1; }
+  .lokation { font-size:2.9vh; font-weight:400; color:var(--guld); line-height:1.2; }
+
+  .hoger { text-align:right; }
+  .klocka {
+    font-size:8.5vh; font-weight:200;
+    letter-spacing:-.045em; line-height:.9;
+  }
+  .vader {
+    margin-top:1.2vh;
+    font-size:3vh; font-weight:500; color:var(--guld);
+    display:flex; align-items:center; justify-content:flex-end; gap:1.2vh;
+    white-space:nowrap;
+  }
+  .vader svg { width:1.15em; height:1.15em; }
+
+  .personer {
+    display:flex; flex-direction:column; gap:3.4vh;
+    border-top:1px solid rgba(16,16,16,.1);
+    border-bottom:1px solid rgba(16,16,16,.1);
+    margin:2.5vh 0;
+    padding:3.4vh 0;
   }
 
-  .vanster { display:flex; flex-direction:column; gap:1.4vh; align-items:flex-start; }
-
-  .status {
-    display:inline-flex; align-items:center; gap:1.2vh;
-    background:#fff; color:var(--ink);
-    padding:1.3vh 2.4vh; border-radius:99px;
-    font-size:3vh; font-weight:600; letter-spacing:-.01em;
-    transition:color .45s ease;
+  .person .n {
+    font-size:10.5vh; font-weight:800;
+    letter-spacing:-.04em; line-height:1;
   }
-  .prick {
-    width:1.6vh; height:1.6vh; border-radius:50%;
-    background:var(--bg);
-    transition:background-color .45s ease;
+  .person .tel {
+    font-size:4.4vh; font-weight:600; color:var(--bla);
+    letter-spacing:.01em; margin-top:.6vh;
   }
 
-  .tid { font-size:2.7vh; color:var(--soft); font-weight:400; }
+  .botten { display:flex; align-items:center; justify-content:space-between; gap:3vw; }
 
-  button {
-    font:inherit; font-size:2.6vh; font-weight:600;
-    color:var(--ink); background:transparent;
-    border:.35vh solid var(--ink); border-radius:99px;
-    padding:1.6vh 3vh; cursor:pointer;
-    transition:background-color .15s ease, color .15s ease;
+  .pill {
+    display:inline-flex; align-items:center; gap:1.6vh;
+    background:var(--status); color:var(--vit);
+    padding:1.8vh 3.4vh; border-radius:99px;
+    font-size:4.2vh; font-weight:700; letter-spacing:-.015em;
+    transition:background-color .5s ease;
   }
-  button:active { background:var(--ink); color:var(--bg); }
-  button:focus-visible { outline:.4vh solid var(--ink); outline-offset:.6vh; }
+  .pill .bulle {
+    width:1.9vh; height:1.9vh; border-radius:50%;
+    background:var(--vit);
+  }
+
+  .mitten { text-align:center; }
+  .tider { font-size:3.2vh; font-weight:600; }
+  .hint  { font-size:2.3vh; color:var(--guld); margin-top:.5vh; }
+
+  #sandvik { height:6vh; width:auto; flex:none; opacity:.85; }
+
+  .ring {
+    position:fixed; z-index:5;
+    width:18vh; height:18vh; margin:-9vh 0 0 -9vh;
+    border-radius:50%; border:.6vh solid var(--status);
+    opacity:.85; pointer-events:none;
+    animation:vaxa .5s ease-out forwards;
+  }
+  @keyframes vaxa {
+    from { transform:scale(.2); opacity:.85; }
+    to   { transform:scale(1);  opacity:0;   }
+  }
 
   #panik {
-    position:fixed; inset:0; z-index:9;
-    background:#0B0F0C; color:#7CFFB2;
+    position:fixed; inset:0; z-index:20;
+    background:var(--ink); color:#4ADE80;
     font-family:"Courier New", monospace;
-    font-size:2.9vh; line-height:1.9;
-    padding:8vh 6vw;
+    font-size:3.2vh; line-height:1.85;
+    padding:9vh 7vw;
     opacity:0; pointer-events:none;
-    transition:opacity .3s ease;
+    transition:opacity .25s ease;
     white-space:pre;
   }
   #panik.pa { opacity:1; }
 
-  @media (prefers-reduced-motion:reduce) { * { transition:none !important; } }
+  @media (prefers-reduced-motion:reduce) { *, .ring { transition:none !important; animation:none !important; } }
 </style>
 </head>
 <body>
 
-  <header>
-    <div class="vanstergrupp">
-      <img class="logga" id="mark" src="https://static.wixstatic.com/media/bc106e_12074164c10b48b28451463a7be238e7~mv2.png/v1/fill/w_560,h_280,al_c,q_85,enc_auto/R%C3%A5lis%20White%20Logo.png" alt="Rålis">
+<div class="kort">
+
+  <div class="topp">
+    <div class="avsandare">
+      <img id="mark" src="https://static.wixstatic.com/media/bc106e_12074164c10b48b28451463a7be238e7~mv2.png/v1/fill/w_560,h_280,al_c,q_85,enc_auto/R%C3%A5lis%20White%20Logo.png" alt="Rålis">
       <div>
-        <div class="avd">IT Support</div>
-        <div class="plats">Västberga</div>
+        <div class="enhet">IT Support</div>
+        <div class="lokation">Västberga</div>
       </div>
     </div>
-    <img class="logga sandvik" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmNX1u0XowiTUjIzONEGHy6u4BCpG1NCpFyo96LJh_o_Uu3wgY-tKZYas2&amp;s=10" alt="Sandvik">
-  </header>
-
-  <div class="namn">
-    <div>Joel Nilsson</div>
-    <div>Isak Söderström</div>
+    <div class="hoger">
+      <div class="klocka" id="klocka">--:--</div>
+      <div class="vader" id="vader"></div>
+    </div>
   </div>
 
-  <footer>
-    <div class="vanster">
-      <div class="status"><span class="prick"></span><span id="statustext">På plats</span></div>
-      <div class="tid">Mån–fre 07.15–16.45</div>
+  <div class="personer">
+    <div class="person">
+      <div class="n">Joel Nilsson</div>
+      <div class="tel">076 101 92 92</div>
     </div>
-    <button id="knapp">Sätt till borta</button>
-  </footer>
+    <div class="person">
+      <div class="n">Isak Söderström</div>
+      <div class="tel">072 550 02 86</div>
+    </div>
+  </div>
 
-  <div id="panik"></div>
+  <div class="botten">
+    <div class="pill"><span class="bulle"></span><span id="pilltext">På plats</span></div>
+    <div class="mitten">
+      <div class="tider">Mån–fre 07.15–16.45</div>
+      <div class="hint">Tryck tre gånger för att byta läge</div>
+    </div>
+    <img id="sandvik" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmNX1u0XowiTUjIzONEGHy6u4BCpG1NCpFyo96LJh_o_Uu3wgY-tKZYas2&amp;s=10" alt="Sandvik">
+  </div>
+
+</div>
+
+<div id="panik"></div>
 
 <script>
-const NYCKEL = "skylt-status";
+(function () {
+  "use strict";
 
-function idag() { return new Date().toDateString(); }
+  var LAT = 59.296, LON = 18.006;
+  var NYCKEL = "skylt-status";
 
-function las() {
-  try {
-    const r = JSON.parse(localStorage.getItem(NYCKEL));
-    if (r && r.dag === idag()) return r.borta;
-  } catch (e) {}
-  return false;
-}
+  var offsetMs = null;
 
-function spara(borta) {
-  try { localStorage.setItem(NYCKEL, JSON.stringify({ borta: borta, dag: idag() })); } catch (e) {}
-}
+  function tolkLokal(s) {
+    var m = /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(s || "");
+    if (!m) return null;
+    return Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4], +m[5]);
+  }
 
-function satt(borta) {
-  document.body.classList.toggle("borta", borta);
-  document.getElementById("statustext").textContent = borta ? "Inte på plats" : "På plats";
-  document.getElementById("knapp").textContent = borta ? "Sätt till på plats" : "Sätt till borta";
-  spara(borta);
-}
-
-document.getElementById("knapp").addEventListener("click", function () {
-  satt(!document.body.classList.contains("borta"));
-});
-
-const RADER = [
-  "Vastberga IT — recovery console",
-  "",
-  "> kontrollerar kaffeniva ............ KRITISKT LAG",
-  "> startar om Joel ................... OK",
-  "> startar om Isak ................... OK",
-  "> letar efter dokumentationen ....... TIMEOUT",
-  "",
-  "Har du provat att stanga av den och satta pa den igen?"
-];
-
-let tryck = 0, timer = null;
-
-document.getElementById("mark").addEventListener("click", function () {
-  clearTimeout(timer);
-  tryck++;
-  timer = setTimeout(function () { tryck = 0; }, 1200);
-  if (tryck < 5) return;
-  tryck = 0;
-
-  const p = document.getElementById("panik");
-  p.textContent = "";
-  p.classList.add("pa");
-
-  let i = 0;
-  const skriv = setInterval(function () {
-    p.textContent += RADER[i] + "\n";
-    if (++i >= RADER.length) {
-      clearInterval(skriv);
-      setTimeout(function () { p.classList.remove("pa"); }, 3200);
+  function stallTid(utcOffsetSek, apiTid) {
+    var fran = (utcOffsetSek || 0) * 1000;
+    var stamp = tolkLokal(apiTid);
+    if (stamp !== null) {
+      var avvikelse = Math.abs((Date.now() + fran) - stamp);
+      if (avvikelse > 30 * 60 * 1000) fran = stamp - Date.now();
     }
-  }, 260);
-});
+    offsetMs = fran;
+    ritaKlocka();
+  }
 
-satt(las());
+  function ritaKlocka() {
+    var el = document.getElementById("klocka");
+    if (offsetMs === null) { el.textContent = "--:--"; return; }
+    var d = new Date(Date.now() + offsetMs);
+    var h = d.getUTCHours(), m = d.getUTCMinutes();
+    el.textContent = (h < 10 ? "0" : "") + h + ":" + (m < 10 ? "0" : "") + m;
+  }
 
-setInterval(function () {
-  if (document.body.classList.contains("borta") && !las()) satt(false);
-}, 60000);
+  function stockholmsDag() {
+    if (offsetMs === null) return null;
+    var d = new Date(Date.now() + offsetMs);
+    return d.getUTCFullYear() + "-" + (d.getUTCMonth() + 1) + "-" + d.getUTCDate();
+  }
+
+  setInterval(ritaKlocka, 10000);
+
+  var KODER = {
+    0:["Klart","sol"], 1:["Mest klart","sol"], 2:["Halvklart","halv"], 3:["Mulet","moln"],
+    45:["Dimma","moln"], 48:["Dimma","moln"],
+    51:["Duggregn","regn"], 53:["Duggregn","regn"], 55:["Duggregn","regn"],
+    56:["Underkylt regn","regn"], 57:["Underkylt regn","regn"],
+    61:["Lätt regn","regn"], 63:["Regn","regn"], 65:["Kraftigt regn","regn"],
+    66:["Underkylt regn","regn"], 67:["Underkylt regn","regn"],
+    71:["Lätt snö","sno"], 73:["Snö","sno"], 75:["Kraftig snö","sno"], 77:["Snökorn","sno"],
+    80:["Regnskurar","regn"], 81:["Regnskurar","regn"], 82:["Kraftiga skurar","regn"],
+    85:["Snöbyar","sno"], 86:["Snöbyar","sno"],
+    95:["Åska","aska"], 96:["Åska","aska"], 99:["Åska","aska"]
+  };
+
+  var IKON = {
+    sol:  '<circle cx="12" cy="12" r="5"/><g stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 1.6v3M12 19.4v3M1.6 12h3M19.4 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M19.4 4.6l-2.1 2.1M6.7 17.3l-2.1 2.1"/></g>',
+    halv: '<circle cx="8.5" cy="8.5" r="3.8"/><path d="M8 19h9a4 4 0 0 0 0-8 5.6 5.6 0 0 0-10.5 1.4A3.4 3.4 0 0 0 8 19z"/>',
+    moln: '<path d="M7 19h10a4.1 4.1 0 0 0 0-8.2A6.1 6.1 0 0 0 5.4 12.4 3.5 3.5 0 0 0 7 19z"/>',
+    regn: '<path d="M7 13.4h10a4 4 0 0 0 0-8 6 6 0 0 0-11.5 1.6 3.5 3.5 0 0 0 1.5 6.4z"/><g stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M8.6 16.4l-1 4M13 16.4l-1 5M17.4 16.4l-1 4"/></g>',
+    sno:  '<path d="M7 13.4h10a4 4 0 0 0 0-8 6 6 0 0 0-11.5 1.6 3.5 3.5 0 0 0 1.5 6.4z"/><g fill="currentColor"><circle cx="9" cy="18.2" r="1.3"/><circle cx="13" cy="20.8" r="1.3"/><circle cx="17" cy="18.2" r="1.3"/></g>',
+    aska: '<path d="M7 12.4h10a4 4 0 0 0 0-8 6 6 0 0 0-11.5 1.6 3.5 3.5 0 0 0 1.5 6.4z"/><path d="M13.6 14.2l-4.1 5.2h3.1l-1 5 5.1-6.7h-3.3z"/>'
+  };
+
+  function svg(typ) {
+    return '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' + (IKON[typ] || IKON.moln) + '</svg>';
+  }
+
+  function hamta() {
+    var url = "https://api.open-meteo.com/v1/forecast"
+      + "?latitude=" + LAT + "&longitude=" + LON
+      + "&current=temperature_2m,weather_code"
+      + "&timezone=Europe%2FStockholm";
+
+    fetch(url).then(function (r) {
+      if (!r.ok) throw new Error(r.status);
+      return r.json();
+    }).then(function (d) {
+      stallTid(d.utc_offset_seconds, d.current && d.current.time);
+      var kod = KODER[d.current.weather_code] || ["", "moln"];
+      document.getElementById("vader").innerHTML =
+        svg(kod[1]) + "<span>" + Math.round(d.current.temperature_2m) + "° " + kod[0] + "</span>";
+    }).catch(function () {
+      document.getElementById("vader").innerHTML = "<span>Väderdata saknas</span>";
+    });
+  }
+
+  hamta();
+  setInterval(hamta, 600000);
+
+  function las() {
+    try {
+      var r = JSON.parse(localStorage.getItem(NYCKEL));
+      var dag = stockholmsDag();
+      if (r && dag && r.dag === dag) return !!r.borta;
+      if (r && !dag) return !!r.borta;
+    } catch (e) {}
+    return false;
+  }
+
+  function spara(borta) {
+    try {
+      localStorage.setItem(NYCKEL, JSON.stringify({ borta: borta, dag: stockholmsDag() }));
+    } catch (e) {}
+  }
+
+  function satt(borta, ljud) {
+    document.body.classList.toggle("borta", borta);
+    document.getElementById("pilltext").textContent = borta ? "Inte på plats" : "På plats";
+    spara(borta);
+    if (ljud) pip(!borta);
+  }
+
+  var ac = null;
+
+  function pip(upp) {
+    try {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      ac = ac || new AC();
+      if (ac.state === "suspended") ac.resume();
+
+      var toner = upp ? [523.25, 784.00] : [523.25, 349.23];
+      var t0 = ac.currentTime + 0.01;
+
+      toner.forEach(function (f, i) {
+        var o = ac.createOscillator(), g = ac.createGain();
+        var s = t0 + i * 0.12;
+        o.type = "sine";
+        o.frequency.value = f;
+        g.gain.setValueAtTime(0.0001, s);
+        g.gain.exponentialRampToValueAtTime(0.22, s + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, s + 0.20);
+        o.connect(g); g.connect(ac.destination);
+        o.start(s); o.stop(s + 0.22);
+      });
+    } catch (e) {}
+  }
+
+  var tryck = 0, nolla = null;
+
+  function ring(x, y) {
+    var el = document.createElement("div");
+    el.className = "ring";
+    el.style.left = x + "px";
+    el.style.top = y + "px";
+    document.body.appendChild(el);
+    setTimeout(function () { el.remove(); }, 520);
+  }
+
+  document.addEventListener("click", function (e) {
+    ring(e.clientX, e.clientY);
+    clearTimeout(nolla);
+    tryck++;
+    if (tryck >= 3) {
+      tryck = 0;
+      satt(!document.body.classList.contains("borta"), true);
+      return;
+    }
+    nolla = setTimeout(function () { tryck = 0; }, 800);
+  });
+
+  var RADER = [
+    "Vastberga IT — recovery console",
+    "",
+    "> kontrollerar kaffeniva ............ KRITISKT LAG",
+    "> startar om Joel ................... OK",
+    "> startar om Isak ................... OK",
+    "> letar efter dokumentationen ....... TIMEOUT",
+    "",
+    "Har du provat att stanga av den och satta pa den igen?"
+  ];
+
+  var eggTryck = 0, eggNolla = null;
+
+  document.getElementById("mark").addEventListener("click", function (e) {
+    e.stopPropagation();
+    clearTimeout(eggNolla);
+    eggTryck++;
+    eggNolla = setTimeout(function () { eggTryck = 0; }, 1200);
+    if (eggTryck < 5) return;
+    eggTryck = 0;
+
+    var p = document.getElementById("panik");
+    p.textContent = "";
+    p.classList.add("pa");
+
+    var i = 0;
+    var skriv = setInterval(function () {
+      p.textContent += RADER[i] + "\n";
+      if (++i >= RADER.length) {
+        clearInterval(skriv);
+        setTimeout(function () { p.classList.remove("pa"); }, 3400);
+      }
+    }, 250);
+  });
+
+  satt(las(), false);
+
+  setInterval(function () {
+    if (document.body.classList.contains("borta") && !las()) satt(false, false);
+  }, 60000);
+
+})();
 </script>
 
 </body>
