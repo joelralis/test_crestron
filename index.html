@@ -263,18 +263,18 @@
   function las() {
     try {
       var r = JSON.parse(localStorage.getItem(NYCKEL));
-      var dag = stockholmsDag();
-      if (r && dag && r.dag === dag) return !!r.borta;
-      if (r && !dag) return !!r.borta;
+      if (r) return !!r.borta;
     } catch (e) {}
-    return false;
+    return true; // Default = borta
   }
+
 
   function spara(borta) {
     try {
-      localStorage.setItem(NYCKEL, JSON.stringify({ borta: borta, dag: stockholmsDag() }));
+      localStorage.setItem(NYCKEL, JSON.stringify({ borta: borta }));
     } catch (e) {}
   }
+
 
   function satt(borta, ljud) {
     document.body.classList.toggle("borta", borta);
@@ -369,9 +369,6 @@
 
   satt(las(), false);
 
-  setInterval(function () {
-    if (document.body.classList.contains("borta") && !las()) satt(false, false);
-  }, 60000);
 
 })();
 </script>
